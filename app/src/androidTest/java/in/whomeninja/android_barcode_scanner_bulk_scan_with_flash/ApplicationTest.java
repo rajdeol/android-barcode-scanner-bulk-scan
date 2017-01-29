@@ -1,4 +1,4 @@
-package in.whomeninja.android_barcode_scanner;
+package in.whomeninja.android_barcode_scanner_bulk_scan_with_flash;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

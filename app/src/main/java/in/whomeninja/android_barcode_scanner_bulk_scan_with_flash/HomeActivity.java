@@ -1,8 +1,8 @@
-package in.whomeninja.android_barcode_scanner;
+package in.whomeninja.android_barcode_scanner_bulk_scan_with_flash;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +13,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends AppCompatActivity {
     private String codeFormat,codeContent;
     private TextView formatTxt, contentTxt;
 
@@ -57,9 +57,12 @@ public class HomeActivity extends ActionBarActivity {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         integrator.setPrompt(this.getString(R.string.scan_bar_code));
-        integrator.setResultDisplayDuration(0);
-        integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
+        integrator.setCaptureActivity(TorchOnCaptureActivity.class);
+        integrator.setOrientationLocked(false);
+        //integrator.setResultDisplayDuration(0);
+        //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
         integrator.setCameraId(0);  // Use a specific camera of the device
+        integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan();
     }
 
@@ -75,14 +78,18 @@ public class HomeActivity extends ActionBarActivity {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         if (scanningResult != null) {
-            //we have a result
-            codeContent = scanningResult.getContents();
-            codeFormat = scanningResult.getFormatName();
+            if(scanningResult.getContents() != null){
+                //we have a result
+                codeContent = scanningResult.getContents();
+                codeFormat = scanningResult.getFormatName();
 
-            // display it on screen
-            formatTxt.setText("FORMAT: " + codeFormat);
-            contentTxt.setText("CONTENT: " + codeContent);
+                // display it on screen
+                formatTxt.setText("FORMAT: " + codeFormat);
+                contentTxt.setText("CONTENT: " + codeContent);
 
+            }else{
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            }
         }else{
             Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
