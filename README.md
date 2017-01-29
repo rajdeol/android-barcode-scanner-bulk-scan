@@ -5,3 +5,10 @@ Details of the entire Application Available on my Blog
 http://blog.whomeninja.in/android-barcode-scanner/
 
 Built using Android Studio with gradle
+
+- Update the build.gradle file and add the dependency
+- Add camera permission in AndroidManifest.xml
+- This app only supports min sdk -9
+- Vertical Scan - 
+	- create new activity that extend CaptureActivity
+	- update androidmanifest.xml and add the orientation as fullSensor
