@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 
-import com.journeyapps.barcodescanner.CaptureActivity;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
@@ -17,12 +16,15 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 public class TorchOnCaptureActivity extends Activity {
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
+    private boolean cameraFlashOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         barcodeScannerView = initializeContent();
+        TorchEventListener torchEventListener = new TorchEventListener(this);
+        barcodeScannerView.setTorchListener(torchEventListener);
 
         // turn the flash on if set via intent
         Intent scanIntent = getIntent();
@@ -43,7 +45,8 @@ public class TorchOnCaptureActivity extends Activity {
      * @return the DecoratedBarcodeView
      */
     protected DecoratedBarcodeView initializeContent() {
-        setContentView(com.google.zxing.client.android.R.layout.zxing_capture);
+        setContentView(R.layout.capture_flash);
+        //setContentView(com.google.zxing.client.android.R.layout.zxing_capture);
         return (DecoratedBarcodeView)findViewById(com.google.zxing.client.android.R.id.zxing_barcode_scanner);
     }
 
@@ -79,5 +82,31 @@ public class TorchOnCaptureActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+    }
+
+    public void toggleFlash(){
+        if(cameraFlashOn){
+            barcodeScannerView.setTorchOff();
+        }else{
+            barcodeScannerView.setTorchOn();
+        }
+    }
+
+    class TorchEventListener implements DecoratedBarcodeView.TorchListener{
+        private TorchOnCaptureActivity activity;
+
+        TorchEventListener(TorchOnCaptureActivity activity){
+            this.activity = activity;
+        }
+
+        @Override
+        public void onTorchOn() {
+            this.activity.cameraFlashOn = true;
+        }
+
+        @Override
+        public void onTorchOff() {
+            this.activity.cameraFlashOn = false;
+        }
     }
 }
