@@ -1,6 +1,7 @@
 package in.whomeninja.android_barcode_scanner_bulk_scan_with_flash;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
@@ -22,7 +23,14 @@ public class TorchOnCaptureActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         barcodeScannerView = initializeContent();
-        barcodeScannerView.setTorchOn();
+
+        // turn the flash on if set via intent
+        Intent scanIntent = getIntent();
+        if(scanIntent.hasExtra(appConstants.CAMERA_FLASH_ON)){
+            if(scanIntent.getBooleanExtra(appConstants.CAMERA_FLASH_ON,false)){
+                barcodeScannerView.setTorchOn();
+            }
+        }
 
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);

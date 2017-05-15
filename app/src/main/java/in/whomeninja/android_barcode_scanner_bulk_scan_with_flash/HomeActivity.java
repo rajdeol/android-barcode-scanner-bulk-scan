@@ -63,6 +63,8 @@ public class HomeActivity extends AppCompatActivity {
         //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.setBarcodeImageEnabled(true);
+        // set turn the camera flash on by default
+        // integrator.addExtra(appConstants.CAMERA_FLASH_ON,true);
         integrator.initiateScan();
     }
 
