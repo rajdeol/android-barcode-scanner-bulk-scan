@@ -7,4 +7,5 @@
     <string name="btn_scan_now">Scan Now</string>
     <string name="scan_bar_code">Scan a Bar Code</string>
     <string name="turn_on_flashlight">Flash On</string>
+    <string name="turn_off_flashlight">Flash Off</string>
 </resources>

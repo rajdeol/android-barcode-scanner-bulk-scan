@@ -6,12 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:id="@+id/switch_flashlight"
+        android:id="@+id/switch_flashlight_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/turn_on_flashlight"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:onClick="toggleFlash"/>
+    <Button
+        android:id="@+id/switch_flashlight_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/turn_off_flashlight"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:onClick="toggleFlash"/>
 
 

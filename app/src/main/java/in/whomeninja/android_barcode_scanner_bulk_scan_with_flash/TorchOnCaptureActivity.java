@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
@@ -16,6 +17,7 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 public class TorchOnCaptureActivity extends Activity {
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
+    private View turnflashOn, turnflashOff;
     private boolean cameraFlashOn = false;
 
     @Override
@@ -26,11 +28,15 @@ public class TorchOnCaptureActivity extends Activity {
         TorchEventListener torchEventListener = new TorchEventListener(this);
         barcodeScannerView.setTorchListener(torchEventListener);
 
+        turnflashOn = findViewById(R.id.switch_flashlight_on);
+        turnflashOff = findViewById(R.id.switch_flashlight_off);
+
         // turn the flash on if set via intent
         Intent scanIntent = getIntent();
         if(scanIntent.hasExtra(appConstants.CAMERA_FLASH_ON)){
             if(scanIntent.getBooleanExtra(appConstants.CAMERA_FLASH_ON,false)){
                 barcodeScannerView.setTorchOn();
+                updateView();
             }
         }
 
@@ -84,11 +90,21 @@ public class TorchOnCaptureActivity extends Activity {
         return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
-    public void toggleFlash(){
+    public void toggleFlash(View view){
         if(cameraFlashOn){
             barcodeScannerView.setTorchOff();
         }else{
             barcodeScannerView.setTorchOn();
+        }
+    }
+
+    public void updateView(){
+        if(cameraFlashOn){
+            turnflashOn.setVisibility(View.GONE);
+            turnflashOff.setVisibility(View.VISIBLE);
+        }else{
+            turnflashOn.setVisibility(View.VISIBLE);
+            turnflashOff.setVisibility(View.GONE);
         }
     }
 
@@ -102,11 +118,13 @@ public class TorchOnCaptureActivity extends Activity {
         @Override
         public void onTorchOn() {
             this.activity.cameraFlashOn = true;
+            this.activity.updateView();
         }
 
         @Override
         public void onTorchOff() {
             this.activity.cameraFlashOn = false;
+            this.activity.updateView();
         }
     }
 }
