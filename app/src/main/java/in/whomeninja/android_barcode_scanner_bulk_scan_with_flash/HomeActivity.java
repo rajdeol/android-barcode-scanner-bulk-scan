@@ -54,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
      * @param view view of the activity
      */
     public void scanNow(View view){
+        String tag = view.getTag().toString();
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         integrator.setPrompt(this.getString(R.string.scan_bar_code));
@@ -65,6 +66,9 @@ public class HomeActivity extends AppCompatActivity {
         integrator.setBarcodeImageEnabled(true);
         // set turn the camera flash on by default
         // integrator.addExtra(appConstants.CAMERA_FLASH_ON,true);
+        if(tag.equals("continuous")) {
+            integrator.addExtra(appConstants.CONTINEUOUS_SCAN, true);
+        }
         integrator.initiateScan();
     }
 

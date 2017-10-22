@@ -8,4 +8,5 @@
     <string name="scan_bar_code">Scan a Bar Code</string>
     <string name="turn_on_flashlight">Flash On</string>
     <string name="turn_off_flashlight">Flash Off</string>
+    <string name="continuous_scan">continuous scan</string>
 </resources>

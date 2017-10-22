@@ -6,4 +6,5 @@ package in.whomeninja.android_barcode_scanner_bulk_scan_with_flash;
 
 public final class appConstants {
     public static final String CAMERA_FLASH_ON = "CAMERA_FLASH_ON";
+    public static final String CONTINEUOUS_SCAN = "CONTINEUOUS_SCAN";
 }

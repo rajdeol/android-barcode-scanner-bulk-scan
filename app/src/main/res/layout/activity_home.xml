@@ -26,15 +26,27 @@
         android:text="@string/btn_scan_now"
         android:layout_centerHorizontal="true"
         android:onClick="scanNow"
+        android:tag="single"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:id="@+id/btn_scan_now" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_scan_now"
+        android:text="@string/continuous_scan"
+        android:layout_centerHorizontal="true"
+        android:onClick="scanNow"
+        android:tag="continuous"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:id="@+id/btn_scan_continuous" />
 
     <TextView
         android:id="@+id/scan_format"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textIsSelectable="true"
-        android:layout_below="@+id/btn_scan_now"
+        android:layout_below="@+id/btn_scan_continuous"
         android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/activity_vertical_margin" />
     <TextView
